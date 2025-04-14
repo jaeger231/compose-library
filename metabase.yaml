@@ -1,6 +1,15 @@
+#add postgres
+#name the services
+#create custom image for services
+#push to dockerhub
+#
 services:
   metabase:
-    image: metabase/metabase
+    build: 
+      context: .
+      target: ${DOCKER_TARGET}
+    image: harun702/metabase
+
     ports:
       - "3000:3000"
     volumes:
@@ -8,3 +17,28 @@ services:
     environment:
       - MB_DB_FILE=/metabase-data/metabase.db
     restart: unless-stopped
+
+  ui:
+    build:
+      context: ./docker-lesson
+      dockerfile: frontend.dockerfile
+    image: harun702/demo-ui
+    ports: 
+      - "4069:80"
+    restart: always
+
+  backend:
+    build:
+      context: ./docker-lesson
+      dockerfile: backend.dockerfile
+    image: harun702/demo-api
+    ports: 
+      - "5000:5000"
+    restart: no
+    
+
+
+  
+  
+
+
