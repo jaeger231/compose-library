@@ -4,19 +4,19 @@
 #push to dockerhub
 #
 services:
-  metabase:
-    build: 
-      context: .
-      target: ${DOCKER_TARGET}
-    image: harun702/metabase
+  # metabase:
+  #   build: 
+  #     context: .
+  #     target: ${DOCKER_TARGET}
+  #   image: harun702/metabase
 
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./metabase-data:/metabase-data
-    environment:
-      - MB_DB_FILE=/metabase-data/metabase.db
-    restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./metabase-data:/metabase-data
+  #   environment:
+  #     - MB_DB_FILE=/metabase-data/metabase.db
+  #   restart: unless-stopped
 
   ui:
     build:
