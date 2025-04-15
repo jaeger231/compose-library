@@ -8,7 +8,7 @@ services:
     build: 
       context: .
       target: ${DOCKER_TARGET}
-    image: harun702/metabase
+    image: harun702/metabase:v1.2 
     container_name: metabase-app
 
     ports:
