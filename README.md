@@ -1,0 +1,1 @@
+This repository contains Docker Compose configurations for services commonly used by modern web applications, analytics, and development like Matomo for web analysis, PostgreSQL for database management, Metabase for data analysis and others as well.
