@@ -8,24 +8,156 @@ services:
       MATOMO_DATABASE_DBNAME: matomo_db
       MATOMO_DATABASE_USERNAME: test
       MATOMO_DATABASE_PASSWORD: test
-      MATOMO_DATABASE_HOST: db
+      MATOMO_DATABASE_HOST: matomo_db
     volumes:
-      - matomo:/var/www/html  
+      - matomo:/var/www/html
+    depends_on: 
+      - matomo_db
     restart: always
-    depends_on:
-      - db
 
-  db:
-    image: postgres:15
-    container_name: postgres
+  matomo_db:
+    image: mariadb
+    container_name: matomo_mysql
     environment:
-      POSTGRES_DB: matomo_db
+      MYSQL_DATABASE: matomo_db
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_PASSWORD: test
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata-matomo:/var/lib/mysql
+    restart: always
+
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Africa/Nairobi
+    volumes:
+      - codeserver-config:/config
+    ports:
+      - "8443:8443"
+    restart: unless-stopped
+
+  codeserver_db:
+    image: postgres:15
+    container_name: codeserver_postgres
+    environment:
+      POSTGRES_DB: codeserver_db
       POSTGRES_USER: test
       POSTGRES_PASSWORD: test
-    restart: on-failure:10 
+    restart: on-failure 
     volumes:
-      - dbdata:/var/lib/postgresql/data
+      - dbdata-codeserver:/var/lib/postgresql/data
+
+  obsidian:
+    image: lscr.io/linuxserver/obsidian
+    container_name: obsidian
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Africa/Nairobi
+    volumes:
+      - ./obsidian-data:/config
+    ports:
+      - 3421:3000
+    shm_size: "1gb"
+    restart: unless-stopped
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: "postgres://test:test@uptime-db:5432/uptime_kuma"
+    volumes:
+      - uptime-kuma-data:/app/data
+    depends_on:
+      - uptime-db
+    restart: always
+
+  uptime-db:
+    image: postgres:15
+    container_name: uptime-db
+    environment:
+      POSTGRES_DB: uptime_kuma
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    volumes:
+      - uptime-db-data:/var/lib/postgresql/data
+    restart: always
+
+  elk:
+    image: sebp/elk
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    environment:
+      - GF_DATABASE_TYPE=postgres
+      - GF_DATABASE_HOST=grafana-db:5432
+      - GF_DATABASE_NAME=grafana-dbase
+      - GF_DATABASE_USER=test
+      - GF_DATABASE_PASSWORD=test
+    ports:
+     - '3333:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    depends_on:
+      - grafana-db
+
+  grafana-db:
+    image: postgres:15
+    container_name: grafana-db
+    environment:
+      POSTGRES_DB: grafana-dbase
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    volumes:
+      - grafana-db-data:/var/lib/postgresql/data
+    restart: always
+
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - TS_AUTHKEY=ttskey-auth-ksbqDforSW11CNTRL-4mwiCFRLoCewfDmwWn3cCeVX4Nt5zFDN
+    volumes:
+      - tailscale-data:/var/lib/tailscale
+
+    network_mode: "host"
+    restart: unless-stopped
+
+  vaultwarden:
+    image: vaultwarden/server
+    container_name: vaultwarden
+    ports:
+      - "5555:80" 
+    volumes:
+      - ./vw-data:/data
+    restart: unless-stopped
 
 volumes:
   matomo:
-  dbdata:
+  dbdata-matomo:
+  codeserver-config:
+  dbdata-codeserver:
+  obsidian-data:
+  uptime-kuma-data:
+  uptime-db-data:
+  grafana-storage:
+  grafana-db-data:
+  tailscale-data:
+  vw-data:
