@@ -4,11 +4,11 @@ services:
     container_name: grafana
     restart: unless-stopped
     environment:
-      - GF_DATABASE_TYPE=postgres
-      - GF_DATABASE_HOST=grafana-db:5432
-      - GF_DATABASE_NAME=grafana-dbase
-      - GF_DATABASE_USER=test
-      - GF_DATABASE_PASSWORD=test
+      - GF_DATABASE_TYPE=${GF_DATABASE_TYPE}
+      - GF_DATABASE_HOST=${GF_DATABASE_HOST}
+      - GF_DATABASE_NAME=${GF_DATABASE_NAME}
+      - GF_DATABASE_USER=${GF_DATABASE_USER}
+      - GF_DATABASE_PASSWORD=${GF_DATABASE_PASSWORD}
     ports:
      - '3333:3000'
     volumes:
@@ -20,9 +20,9 @@ services:
     image: postgres:15
     container_name: grafana-db
     environment:
-      POSTGRES_DB: grafana-dbase
-      POSTGRES_USER: test
-      POSTGRES_PASSWORD: test
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - grafana-db-data:/var/lib/postgresql/data
     restart: always
