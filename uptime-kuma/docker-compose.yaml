@@ -1,0 +1,28 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: "postgres://test:test@uptime-db:5432/uptime_kuma"
+    volumes:
+      - uptime-kuma-data:/app/data
+    depends_on:
+      - uptime-db
+    restart: always
+
+  uptime-db:
+    image: postgres:15
+    container_name: uptime-db
+    environment:
+      POSTGRES_DB: uptime_kuma
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    volumes:
+      - uptime-db-data:/var/lib/postgresql/data
+    restart: always
+    
+volumes:
+  uptime-kuma-data:
+  uptime-db-data:
