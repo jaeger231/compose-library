@@ -1,0 +1,12 @@
+services:
+  password-vault:
+    image: vaultwarden/server
+    container_name: password-vault
+    ports:
+      - "5555:80" 
+    volumes:
+      - ./vw-data:/data
+    restart: unless-stopped
+
+volumes:
+  vw-data:
