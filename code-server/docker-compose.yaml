@@ -1,0 +1,28 @@
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Africa/Nairobi
+    volumes:
+      - codeserver-config:/config
+    ports:
+      - "8443:8443"
+    restart: unless-stopped
+
+  codeserver_db:
+    image: postgres:15
+    container_name: codeserver_postgres
+    environment:
+      POSTGRES_DB: codeserver_db
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    restart: on-failure 
+    volumes:
+      - dbdata-codeserver:/var/lib/postgresql/data
+
+volumes:
+  codeserver-config:
+  dbdata-codeserver:
