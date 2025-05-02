@@ -3,9 +3,9 @@ services:
     image: lscr.io/linuxserver/obsidian
     container_name: obsidian
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Africa/Nairobi
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
       - ./obsidian-data:/config
     ports:
