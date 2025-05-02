@@ -3,9 +3,9 @@ services:
     image: lscr.io/linuxserver/code-server:latest
     container_name: code-server
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Africa/Nairobi
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
       - codeserver-config:/config
     ports:
@@ -16,9 +16,9 @@ services:
     image: postgres:15
     container_name: codeserver_postgres
     environment:
-      POSTGRES_DB: codeserver_db
-      POSTGRES_USER: test
-      POSTGRES_PASSWORD: test
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     restart: on-failure 
     volumes:
       - dbdata-codeserver:/var/lib/postgresql/data
