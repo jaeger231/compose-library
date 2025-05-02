@@ -5,7 +5,7 @@ services:
     cap_add:
       - NET_ADMIN
     environment:
-      - TS_AUTHKEY=ttskey-auth-ksbqDforSW11CNTRL-4mwiCFRLoCewfDmwWn3cCeVX4Nt5zFDN
+      - TS_AUTHKEY=${TS_AUTHKEY}
     volumes:
       - tailscale-data:/var/lib/tailscale
 
