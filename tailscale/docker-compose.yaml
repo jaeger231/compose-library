@@ -1,0 +1,13 @@
+services:
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - TS_AUTHKEY=ttskey-auth-ksbqDforSW11CNTRL-4mwiCFRLoCewfDmwWn3cCeVX4Nt5zFDN
+    volumes:
+      - tailscale-data:/var/lib/tailscale
+
+volumes:
+  tailscale-data:
