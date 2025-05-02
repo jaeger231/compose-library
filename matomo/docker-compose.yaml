@@ -5,10 +5,10 @@ services:
     ports:
       - "8000:80"
     environment:
-      MATOMO_DATABASE_DBNAME: matomo_db
-      MATOMO_DATABASE_USERNAME: test
-      MATOMO_DATABASE_PASSWORD: test
-      MATOMO_DATABASE_HOST: matomo_db
+      MATOMO_DATABASE_DBNAME: ${MATOMO_DB_NAME}
+      MATOMO_DATABASE_USERNAME: ${MATOMO_DB_USER}
+      MATOMO_DATABASE_PASSWORD: ${MATOMO_DB_PASS}
+      MATOMO_DATABASE_HOST: ${MATOMO_DB_HOST}
     volumes:
       - matomo:/var/www/html
     depends_on: 
@@ -19,10 +19,10 @@ services:
     image: mariadb
     container_name: matomo_mysql
     environment:
-      MYSQL_DATABASE: matomo_db
-      MYSQL_USER: test
-      MYSQL_PASSWORD: test
-      MYSQL_ROOT_PASSWORD: test
+      MYSQL_DATABASE: ${MYSQL_DB_NAME}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASS}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASS}
     ports:
       - "3306:3306"
     volumes:
