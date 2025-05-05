@@ -54,4 +54,3 @@ The container is configured with:
 Keep your `.env` file secure as it contains your Tailscale auth key. Do not commit it to version control.
 ```
 
-You can customize this further based on your specific needs or add additional sections if you have more complex requirements. The README provides basic setup instructions, configuration details, and management commands for users who might need to work with your Tailscale container.
