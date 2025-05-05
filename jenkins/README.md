@@ -1,66 +1,46 @@
-# Grafana with PostgreSQL using Docker Compose
+# Jenkins using Docker Compose
 
-This setup runs [Grafana Enterprise](https://grafana.com/grafana/enterprise/) with PostgreSQL as the external database backend using Docker Compose.
+This Docker Compose setup runs [Jenkins](https://www.jenkins.io/) for automating CI/CD pipelines.
 
-##  Services
+##  Service
 
-### 1. **grafana**
-- **Image:** `grafana/grafana-enterprise`
-- **Purpose:** Grafana is a data visualization and monitoring platform.
+### 1. **jenkins**
+- **Image:** `jenkins/jenkins`
+- **Purpose:** Jenkins is an open-source automation server for building, testing, and deploying code.
 - **Ports:**
-  - `3333:3000` — Web UI available on port 3333.
-- **Environment Variables:**
-  - `GF_DATABASE_TYPE` — Database type, e.g., `postgres`.
-  - `GF_DATABASE_HOST` — Host of the PostgreSQL service (e.g., `grafana-db:5432`).
-  - `GF_DATABASE_NAME` — Name of the PostgreSQL database.
-  - `GF_DATABASE_USER` — PostgreSQL username.
-  - `GF_DATABASE_PASSWORD` — PostgreSQL password.
+  - `7777:8080` — Jenkins Web UI
+  - `50000:50000` — Agent communication port
 - **Volumes:**
-  - `grafana-storage` — Persistent data for Grafana.
-- **Depends on:** `grafana-db`
-- **Restart Policy:** `unless-stopped`
-
-### 2. **grafana-db**
-- **Image:** `postgres:15`
-- **Purpose:** PostgreSQL database used as Grafana's backend.
-- **Environment Variables:**
-  - `POSTGRES_DB` — Name of the database.
-  - `POSTGRES_USER` — Username for authentication.
-  - `POSTGRES_PASSWORD` — Password for the user.
-- **Volumes:**
-  - `grafana-db-data` — Persistent PostgreSQL data.
+  - `/home/ubuntu/jenkins_compose/jenkins_configuration:/var/jenkins_home` — Persists Jenkins configuration and job data.
+- **User:** `root`
+- **Privileged Mode:** Enabled
 - **Restart Policy:** `always`
-
-##  Volumes
-
-- `grafana-storage` – Stores Grafana data.
-- `grafana-db-data` – Stores PostgreSQL data.
 
 ##  Usage
 
-1. **Create a `.env` file** in the same directory as your `docker-compose.yml`:
-   ```env
-   GF_DATABASE_TYPE=postgres
-   GF_DATABASE_HOST=grafana-db:5432
-   GF_DATABASE_NAME=grafana
-   GF_DATABASE_USER=grafanauser
-   GF_DATABASE_PASSWORD=strongpassword
-
-   POSTGRES_DB=grafana
-   POSTGRES_USER=grafanauser
-   POSTGRES_PASSWORD=strongpassword
+1. **Ensure the configuration directory exists:**
+   ```bash
+   mkdir -p /home/ubuntu/jenkins_compose/jenkins_configuration
    ```
 
-2. **Start the services:**
+2. **Start Jenkins:**
    ```bash
    docker-compose up -d
    ```
 
-3. **Access Grafana:**
-   - Open your browser and go to `http://localhost:3333`
+3. **Access Jenkins UI:**
+   - Navigate to `http://localhost:7777` in your browser.
+   - Unlock Jenkins using the password from:
+     ```bash
+     cat /home/ubuntu/jenkins_compose/jenkins_configuration/secrets/initialAdminPassword
+     ```
 
 4. **Stop the stack:**
    ```bash
    docker-compose down
    ```
 
+##  Note:
+
+- This setup runs Jenkins as root in privileged mode, which is convenient for plugin compatibility but not recommended for production without proper security hardening.
+- Secure the Jenkins UI with authentication and configure backups for persistent data.
