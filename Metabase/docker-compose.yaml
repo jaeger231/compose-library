@@ -1,0 +1,36 @@
+services:
+  metabase:
+    image: metabase/metabase
+    ports:
+      - "3030:3000"
+    volumes:
+      - ./metabase-data:/metabase-data
+    environment:
+      MB_DB_TYPE: ${MB_DB_TYPE}
+      MB_DB_DBNAME: ${MB_DB_DBNAME}
+      MB_DB_PORT: ${MB_DB_PORT}
+      MB_DB_USER: ${MB_DB_USER}
+      MB_DB_PASS: ${MB_DB_PASS}
+      MB_DB_HOST: ${MB_DB_HOST}
+    restart: unless-stopped
+    
+  db:
+    image: postgres:15
+    container_name: metabase-postgres
+    environment: 
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    restart: on-failure
+
+volumes:
+  postgres-data:
+  metabase-data:
+
+
+
+  
+  
+
