@@ -25,7 +25,7 @@ This Docker Compose setup runs [Jenkins](https://www.jenkins.io/) for automating
 
 2. **Start Jenkins:**
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 3. **Access Jenkins UI:**
@@ -37,7 +37,7 @@ This Docker Compose setup runs [Jenkins](https://www.jenkins.io/) for automating
 
 4. **Stop the stack:**
    ```bash
-   docker-compose down
+   docker compose down
    ```
 
 ##  Note:

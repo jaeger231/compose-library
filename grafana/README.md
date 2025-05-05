@@ -53,7 +53,7 @@ This setup runs [Grafana Enterprise](https://grafana.com/grafana/enterprise/) wi
 
 2. **Start the services:**
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 3. **Access Grafana:**
@@ -61,6 +61,6 @@ This setup runs [Grafana Enterprise](https://grafana.com/grafana/enterprise/) wi
 
 4. **Stop the stack:**
    ```bash
-   docker-compose down
+   docker compose down
    ```
 

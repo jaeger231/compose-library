@@ -17,7 +17,7 @@ This setup runs the [ELK Stack](https://www.elastic.co/what-is/elk-stack) (Elast
 
 1. **Start the ELK stack:**
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 2. **Access Kibana UI:**
@@ -31,7 +31,7 @@ This setup runs the [ELK Stack](https://www.elastic.co/what-is/elk-stack) (Elast
 
 5. **Stop the stack:**
    ```bash
-   docker-compose down
+   docker compose down
    ```
 
 ##  Note:

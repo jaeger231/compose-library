@@ -56,5 +56,5 @@ Services
 
 4. **Stop the stack:**
    ```bash
-   docker-compose down
+   docker compose down
    ```
