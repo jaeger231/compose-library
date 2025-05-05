@@ -21,7 +21,7 @@ A lightweight, self-hosted password manager compatible with Bitwarden clients.
 
 2. Start the service:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 3. Access the web interface at:
@@ -77,17 +77,17 @@ Regularly back up the `vw-data` directory to prevent data loss.
 
 1. Stop the container:
    ```bash
-   docker-compose down
+   docker compose down
    ```
 
 2. Pull the latest image:
    ```bash
-   docker-compose pull
+   docker compose pull
    ```
 
 3. Restart:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 ```
 
