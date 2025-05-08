@@ -44,7 +44,7 @@ This setup provides [Uptime Kuma](https://github.com/louislam/uptime-kuma), a se
 
 2. **Start the services:**
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 3. **Access Uptime Kuma:**
@@ -52,6 +52,6 @@ This setup provides [Uptime Kuma](https://github.com/louislam/uptime-kuma), a se
 
 4. **Stop the stack:**
    ```bash
-   docker-compose down
+   docker compose down
    ```
 

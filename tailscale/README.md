@@ -17,7 +17,7 @@ This project sets up a Tailscale VPN client.
 
 2. Start the container:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 ## Configuration
@@ -40,7 +40,7 @@ The container is configured with:
 
 - Stop the container:
   ```bash
-  docker-compose down
+  docker compose down
   ```
 
 ## PS:

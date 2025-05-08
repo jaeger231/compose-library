@@ -27,7 +27,7 @@ This Docker Compose setup runs [Obsidian](https://obsidian.md/) in a container u
 
 2. **Start Obsidian:**
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 3. **Access the app:**
@@ -35,7 +35,7 @@ This Docker Compose setup runs [Obsidian](https://obsidian.md/) in a container u
 
 4. **Stop the container:**
    ```bash
-   docker-compose down
+   docker compose down
    ```
 
 ##  PS:
